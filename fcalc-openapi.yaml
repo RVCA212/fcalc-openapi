@@ -1,35 +1,50 @@
 openapi: 3.0.0
 info:
-  title: Financial Calculations API
+  title: Finance Calculator API
+  description: API for calculating future value, present value, payment amount, and interest rate per year for financial purposes.
   version: 1.0.0
-  description: An API for calculating future value, present value, payment amount, and interest rate for financial planning.
 servers:
-  - url: https://5bed-184-185-222-8.ngrok-free.app
+  - url: https://a8cf-184-185-222-8.ngrok-free.app/api
+    description: Main API server
 paths:
-  /api/calculate_fv:
+  /calculate_fv:
     post:
       operationId: calculateFutureValue
-      summary: Calculate Future Value
+      summary: Calculate future value
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
+              required: [PV, IY, N, PMT, Settings]
               properties:
                 PV:
                   type: number
+                  description: Present Value
                 IY:
                   type: number
+                  description: Interest Rate Per Year
                 N:
-                  type: number
+                  type: integer
+                  description: Number of Periods
                 PMT:
                   type: number
-                PMTAtStart:
-                  type: boolean
+                  description: Payment Amount
+                Settings:
+                  type: object
+                  properties:
+                    CY:
+                      type: integer
+                      description: Compounding periods per year
+                      default: 1
+                    PMTAtStart:
+                      type: boolean
+                      description: Payment at the beginning of the period
+                      default: false
       responses:
         '200':
-          description: Success
+          description: Successful calculation of future value
           content:
             application/json:
               schema:
@@ -37,31 +52,46 @@ paths:
                 properties:
                   FV:
                     type: number
+                    description: Future Value
 
-  /api/calculate_pv:
+  /calculate_pv:
     post:
       operationId: calculatePresentValue
-      summary: Calculate Present Value
+      summary: Calculate present value
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
+              required: [FV, IY, N, PMT, Settings]
               properties:
                 FV:
                   type: number
+                  description: Future Value
                 IY:
                   type: number
+                  description: Interest Rate Per Year
                 N:
-                  type: number
+                  type: integer
+                  description: Number of Periods
                 PMT:
                   type: number
-                PMTAtStart:
-                  type: boolean
+                  description: Payment Amount
+                Settings:
+                  type: object
+                  properties:
+                    CY:
+                      type: integer
+                      description: Compounding periods per year
+                      default: 1
+                    PMTAtStart:
+                      type: boolean
+                      description: Payment at the beginning of the period
+                      default: false
       responses:
         '200':
-          description: Success
+          description: Successful calculation of present value
           content:
             application/json:
               schema:
@@ -69,31 +99,46 @@ paths:
                 properties:
                   PV:
                     type: number
+                    description: Present Value
 
-  /api/calculate_pmt:
+  /calculate_pmt:
     post:
-      operationId: calculatePaymentAmount
-      summary: Calculate Payment Amount
+      operationId: calculatePayment
+      summary: Calculate payment amount
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
+              required: [FV, IY, N, PV, Settings]
               properties:
                 FV:
                   type: number
+                  description: Future Value
                 IY:
                   type: number
+                  description: Interest Rate Per Year
                 N:
-                  type: number
+                  type: integer
+                  description: Number of Periods
                 PV:
                   type: number
-                PMTAtStart:
-                  type: boolean
+                  description: Present Value
+                Settings:
+                  type: object
+                  properties:
+                    CY:
+                      type: integer
+                      description: Compounding periods per year
+                      default: 1
+                    PMTAtStart:
+                      type: boolean
+                      description: Payment at the beginning of the period
+                      default: false
       responses:
         '200':
-          description: Success
+          description: Successful calculation of payment amount
           content:
             application/json:
               schema:
@@ -101,31 +146,46 @@ paths:
                 properties:
                   PMT:
                     type: number
+                    description: Payment Amount
 
-  /api/calculate_iy:
+  /calculate_iy:
     post:
       operationId: calculateInterestRate
-      summary: Calculate Interest Rate
+      summary: Calculate interest rate per year
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
+              required: [PV, FV, N, PMT, Settings]
               properties:
                 PV:
                   type: number
+                  description: Present Value
                 FV:
                   type: number
+                  description: Future Value
                 N:
-                  type: number
+                  type: integer
+                  description: Number of Periods
                 PMT:
                   type: number
-                PMTAtStart:
-                  type: boolean
+                  description: Payment Amount
+                Settings:
+                  type: object
+                  properties:
+                    CY:
+                      type: integer
+                      description: Compounding periods per year
+                      default: 1
+                    PMTAtStart:
+                      type: boolean
+                      description: Payment at the beginning of the period
+                      default: false
       responses:
         '200':
-          description: Success
+          description: Successful calculation of interest rate per year
           content:
             application/json:
               schema:
@@ -133,4 +193,4 @@ paths:
                 properties:
                   IY:
                     type: number
-
+                    description: Interest Rate Per Year
