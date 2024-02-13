@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  title: Financial Calculations API
+  version: 1.0.0
+  description: An API for calculating future value, present value, payment amount, and interest rate for financial planning.
+servers:
+  - url: http://localhost:5000
+paths:
+  /api/calculate_fv:
+    post:
+      operationId: calculateFutureValue
+      summary: Calculate Future Value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                PV:
+                  type: number
+                IY:
+                  type: number
+                N:
+                  type: number
+                PMT:
+                  type: number
+                PMTAtStart:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  FV:
+                    type: number
+
+  /api/calculate_pv:
+    post:
+      operationId: calculatePresentValue
+      summary: Calculate Present Value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                FV:
+                  type: number
+                IY:
+                  type: number
+                N:
+                  type: number
+                PMT:
+                  type: number
+                PMTAtStart:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  PV:
+                    type: number
+
+  /api/calculate_pmt:
+    post:
+      operationId: calculatePaymentAmount
+      summary: Calculate Payment Amount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                FV:
+                  type: number
+                IY:
+                  type: number
+                N:
+                  type: number
+                PV:
+                  type: number
+                PMTAtStart:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  PMT:
+                    type: number
+
+  /api/calculate_iy:
+    post:
+      operationId: calculateInterestRate
+      summary: Calculate Interest Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                PV:
+                  type: number
+                FV:
+                  type: number
+                N:
+                  type: number
+                PMT:
+                  type: number
+                PMTAtStart:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  IY:
+                    type: number
+
