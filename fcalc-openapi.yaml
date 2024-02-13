@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: An API for calculating future value, present value, payment amount, and interest rate for financial planning.
 servers:
-  - url: http://localhost:5000
+  - url: https://5bed-184-185-222-8.ngrok-free.app
 paths:
   /api/calculate_fv:
     post:
